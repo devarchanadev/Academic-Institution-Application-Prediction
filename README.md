@@ -4,9 +4,8 @@
 [![GitHub](https://img.shields.io/badge/View%20Repository-181717?logo=github&logoColor=white&color=green)](https://github.com/devarchanadev/College-Application-Prediction)
 [![Download Dataset](https://img.shields.io/badge/Download%20Dataset-blue?style=for-the-badge)](https://cran.r-project.org/web/packages/ISLR2/index.html)
 
-## 📚 Table of Contents
-
-- [Project Overview](#Project-Overview)
+## 📑 Table of Contents
+- [Project Overview](#project-overview)
 - [Business Impact](#business-impact)
 - [Insights and Recommendations](#insights-and-recommendations)
 - [Passion for the Topic](#passion-for-the-topic)
@@ -19,6 +18,7 @@
 - [Conclusion](#conclusion)
 - [Statistical Importance](#statistical-importance)
 - [Practical Lessons for Data Scientists](#practical-lessons-for-data-scientists)
+
 
 ## 🎯 Project Overview
 
