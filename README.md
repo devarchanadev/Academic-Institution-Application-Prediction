@@ -80,6 +80,8 @@ I am passionate about the intersection of data science and education, particular
 
 The analysis shows that simpler models like **Linear Regression**, **PCR**, and **PLS** perform similarly, while **Ridge Regression** has a slightly higher test error. **Lasso Regression** offers more interpretability by highlighting key variables, despite a slightly higher error.
 
+<img width="539" alt="Screenshot 2024-08-28 191844" src="https://github.com/user-attachments/assets/33f603e9-0780-4221-8e24-f3da7792915a">
+
 ## 🛠️ Tools and Techniques Used
 
 - **R Programming Language**
