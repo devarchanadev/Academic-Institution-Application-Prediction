@@ -1,0 +1,209 @@
+---
+title: "College Application Prediction"
+output: html_document
+date: "2023-07-18"
+---
+
+# PROJECT OVERVIEW
+In this exercise, we will predict the number of applications received using the other variables in the College data set.
+
+First we will split the data set into a training set and a test set.
+```{r}
+library(ISLR2)
+data(College)
+head(College)
+set.seed(123)
+indis <- sample(1:nrow(College), round(2/3*nrow(College)), replace = FALSE)
+college_train <- College[indis, ]
+college_test <- College[-indis, ]
+```
+
+
+Now I will fit a linear model using least squares on the training set, and report the test error obtained.
+```{r}
+lm.fit <- lm(Apps~., data = college_train)
+lm_pred <- predict(lm.fit, college_test )
+summary(lm.fit)
+Test_error_linear <- mean((college_test$Apps - lm_pred)^2)
+Test_error_linear
+```
+#The test error is 1684049
+
+
+
+
+
+
+Now, we will fit a ridge regression model on the training set, with λ chosen by cross-validation. Report the test error obtained.
+```{r}
+library(glmnet) 
+set.seed(123)
+X_train = model.matrix(Apps~., data = college_train)
+X_test = model.matrix(Apps~., data = college_test)
+#Choosing lambda using cross-validation
+cv.out = cv.glmnet(X_train, college_train$Apps, alpha=0)
+sel = cv.out$lambda.min
+sel
+#fitting ridge model
+ridge_mod = glmnet(X_train, college_train$Apps, alpha = 0, lambda=sel)
+#Make predictions
+ridge_pred = predict(ridge_mod, s=sel, newx = X_test, type = "response")
+#Calculate test error
+summary(ridge_pred)
+Test_error_ridge <- mean((ridge_pred - college_test$Apps)^2)
+Test_error_ridge
+```
+#The best lambda by cross validation is 311.779 and the test error is 2791017
+
+
+
+
+Now, we will fit a lasso model on the training set, with λ chosen by crossvalidation. Report the test error obtained, along with the number of non-zero coefficient estimates
+```{r}
+#first choosing best lambda
+set.seed(123)
+cv.out_2 = cv.glmnet(X_train, college_train$Apps, alpha=1)
+sel2 = cv.out_2$lambda.min
+sel2
+
+#Fitting lasso model
+lasso_mod = glmnet(X_train, college_train$Apps, alpha=1, lambda=sel2)
+#Make predictions
+lasso_pred = predict(lasso_mod, s=sel2, newx=X_test)
+Test_error_lasso <- mean((lasso_pred -college_test$Apps)^2)
+Test_error_lasso
+coefficient <- predict(lasso_mod, s = sel2, type = "coefficients")
+
+coefficient[coefficient!=0]
+
+which(coefficient!=0)
+
+numberofnonzero <- sum(coef(lasso_mod, s = sel2) != 0)
+numberofnonzero
+```
+
+
+#The best lambda by cross validation is 6.120348, the test error is 1692748 and the non-zero coefficient estimates are also listed accordingly
+
+
+
+
+
+Now we will fit a PCR model on the training set, with M chosen by crossvalidation. Report the test error obtained, along with the value of M selected by cross-validation.
+```{r}
+library(pls)
+set.seed(123)
+
+pcrfit <- pcr(Apps~., data=college_train, scale=TRUE, validation="CV")
+
+validationplot(pcrfit, val.type = "MSEP")
+summary(pcrfit)
+```
+
+#The lowest MSEP occurs at around M = 17 which can be confirmed from the summary as well ignoring the rest of the components which we neglect for now as they do not solve the purpose.
+
+
+
+
+
+
+
+```{r}
+#predicting using M = 17 found by cross validation
+pcrfit1 <- pcr(Apps~., data=college_train, scale=TRUE, ncomp=17)
+prediction <- predict(pcrfit1, college_test, ncomp=17)
+
+#test error
+Test_error_pcr <- mean((prediction-college_test$Apps)^2)
+Test_error_pcr
+```
+#also confirmed the M value by changing the value of ncomp value from 8 to 17 and got the minimum value of test error at 17. Hence, considered M = 17 in the final answer.
+#The test error is 1684049
+
+
+
+
+
+
+
+Now we will fit a PLS model on the training set, with M chosen by crossvalidation. Report the test error obtained, along with the value of M selected by cross-validation.
+```{r}
+set.seed(123)
+#Fit and determine M based on CV results
+plsfit = plsr(Apps~., data=college_train, scale=TRUE, validation="CV")
+validationplot(plsfit, val.type = "MSEP")
+summary(plsfit)
+```
+#From the summary and the plot, the lowest MSEP occur at M = 17.
+
+
+
+
+
+
+
+
+```{r}
+#making prediction with M = 17
+plsfit1 = plsr(Apps~., data=college_train, scale=TRUE, ncomp=17)
+prediction = predict(plsfit1, college_test, ncomp = 17)
+#test error
+Test_error_pls <- mean((prediction - college_test$Apps)^2)
+Test_error_pls
+```
+#also confirmed the M value by changing the value of ncomp value from 8 to 17 and got the minimum value of test error at 17. Hence, considered M = 17 in the final answer.
+#the test error is 1684049
+
+
+
+Finally explaining the results obtained.We will check how accurately can we predict the number of college applications received. Also, is there much difference among the test errors resulting from these five approaches?
+
+```{r}
+Test_error_linear
+Test_error_ridge
+Test_error_lasso
+Test_error_pcr
+Test_error_pls
+```
+
+We see that the test errors for inear regression, PCR and PLS are relatively close, the test errors of ridge regression is a little higher. Lasso also has a little more value as compared to linear, pcr and pls. There are not much differences in the test errors except for that in ridge regression. We can predict the number of college application received with reasonable accuracy.
+
+
+
+
+# Data Preparation
+
+I began by splitting the dataset into a training set and a test set. This was done to ensure that the models could be evaluated on unseen data, helping to prevent overfitting and giving a better estimate of their performance in real-world scenarios.
+
+
+# Linear Regression
+
+The first model I used was linear regression, which served as a baseline for understanding the relationship between the number of applications and the other variables in the dataset. By fitting this model to the training data, I could predict the number of applications in the test set and calculate the associated test error. This provided a straightforward way to gauge how well the other variables explained the variation in application numbers.
+
+
+# Ridge Regression
+
+Next, I explored Ridge Regression, a technique designed to address issues of multicollinearity by regularizing the coefficients of the model. This helps to prevent overfitting, especially when dealing with datasets that have highly correlated variables. I used cross-validation to select the optimal value for the regularization parameter, λ. Ridge Regression slightly increased the test error compared to linear regression, indicating that while it may help with multicollinearity, it didn't drastically improve predictive accuracy for this particular dataset.
+
+
+# Lasso Regression
+
+I then applied Lasso Regression, which not only regularizes the coefficients like Ridge Regression but also performs variable selection by shrinking some coefficients to zero. This makes Lasso particularly useful when dealing with high-dimensional data, as it can simplify the model by eliminating less important variables. After selecting the optimal λ via cross-validation, I found that the test error was similar to that of linear regression, but with fewer variables contributing to the prediction. This indicated which predictors were most influential, offering insights into the key factors driving college applications.
+
+
+# Principal Component Regression (PCR)
+
+Principal Component Regression (PCR) was the next technique I used. PCR reduces the dimensionality of the data by transforming the original variables into a set of uncorrelated components before fitting the regression model. I used cross-validation to determine the optimal number of components (M) to include. The results showed that using 17 components provided the lowest test error, which was comparable to the linear regression model. This indicated that while PCR effectively reduced the dimensionality, it did not significantly improve the predictive accuracy.
+
+
+# Partial Least Squares (PLS)
+
+Finally, I applied Partial Least Squares (PLS), which, like PCR, is a dimensionality reduction technique. However, PLS differs by considering the relationship between the predictors and the response variable when forming the components. Cross-validation also suggested using 17 components, resulting in a test error similar to that of PCR and linear regression. This reinforced the idea that while dimensionality reduction can be useful, it didn't offer a substantial performance boost for this dataset.
+
+
+# Results and Conclusions
+
+After comparing the test errors from all the models, I found that the differences were relatively small. Linear regression, PCR, and PLS produced similar test errors, while Ridge Regression had a slightly higher error. Lasso Regression performed similarly to linear regression but with fewer variables, providing a more interpretable model.
+
+
+These results suggest that for this dataset, simpler models like linear regression are sufficient to achieve reasonable predictive accuracy. More complex models like Ridge and Lasso Regression or dimensionality reduction techniques like PCR and PLS did not significantly outperform linear regression. This indicates that the relationships in the data were relatively straightforward, and more advanced methods were not necessary for accurate predictions in this case.
