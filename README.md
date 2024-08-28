@@ -6,28 +6,19 @@
 
 ## 📑 Table of Contents
 
-| [Project Overview](#project-overview) ![Button](https://via.placeholder.com/100x50?text=Overview) | [Business Impact](#business-impact) ![Button](https://via.placeholder.com/100x50?text=Impact) |
-|--------------------------|------------------------------|
-| [Insights and Recommendations](#insights-and-recommendations) ![Button](https://via.placeholder.com/100x50?text=Insights) | [Passion for the Topic](#passion-for-the-topic) ![Button](https://via.placeholder.com/100x50?text=Passion) |
-| [Business Questions Answered](#business-questions-answered) ![Button](https://via.placeholder.com/100x50?text=Questions) | [Results](#results) ![Button](https://via.placeholder.com/100x50?text=Results) |
-| [Tools and Techniques Used](#tools-and-techniques-used) ![Button](https://via.placeholder.com/100x50?text=Tools) | [Data Source](#data-source) ![Button](https://via.placeholder.com/100x50?text=Source) |
-| [Installation Steps](#installation-steps) ![Button](https://via.placeholder.com/100x50?text=Install) | [Key Takeaways](#key-takeaways) ![Button](https://via.placeholder.com/100x50?text=Takeaways) |
-| [Conclusion](#conclusion) ![Button](https://via.placeholder.com/100x50?text=Conclusion) | [Statistical Importance](#statistical-importance) ![Button](https://via.placeholder.com/100x50?text=Statistical) |
-| [Practical Lessons for Data Scientists](#practical-lessons-for-data-scientists) ![Button](https://via.placeholder.com/100x50?text=Lessons) | [Visit Repository](https://github.com/yourusername/yourrepository) ![Button](https://via.placeholder.com/100x50?text=Repository) |
-| [Download Dataset](https://github.com/yourusername/yourrepository/blob/main/College.csv) ![Button](https://via.placeholder.com/100x50?text=Download) |
-- [Project Overview](#project-overview)
-- [Business Impact](#business-impact)
-- [Insights and Recommendations](#insights-and-recommendations)
-- [Passion for the Topic](#passion-for-the-topic)
-- [Business Questions Answered](#business-questions-answered)
-- [Results](#results)
-- [Tools and Techniques Used](#tools-and-techniques-used)
-- [Data Source](#data-source)
-- [Installation Steps](#installation-steps)
-- [Key Takeaways](#key-takeaways)
-- [Conclusion](#conclusion)
-- [Statistical Importance](#statistical-importance)
-- [Practical Lessons for Data Scientists](#practical-lessons-for-data-scientists)
+- [Project Overview](#-project-overview)
+- [Business Impact](#-business-impact)
+- [Insights and Recommendations](#-insights-and-recommendations)
+- [Passion for the Topic](#-passion-for-the-topic)
+- [Business Questions Answered](#-business-questions-answered)
+- [Results](#-results)
+- [Tools and Techniques Used](#-tools-and-techniques-used)
+- [Data Source](#-data-source)
+- [Installation Steps](#-installation-steps)
+- [Key Takeaways](#-key-takeaways)
+- [Conclusion](#-conclusion)
+- [Statistical Importance](#-statistical-importance)
+- [Practical Lessons for Data Scientists](#-practical-lessons-for-data-scientists)
 
 
 ## 🎯 Project Overview
