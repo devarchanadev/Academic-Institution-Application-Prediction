@@ -1,4 +1,4 @@
-# 🎓 College Application Prediction Project
+# 🎓 Academic Institution Application Prediction Project
 
 ![R](https://img.shields.io/badge/Made%20with-R-1f425f.svg)
 [![GitHub](https://img.shields.io/badge/View%20Repository-181717?logo=github&logoColor=white&color=green)](https://github.com/devarchanadev/College-Application-Prediction)
